@@ -6,6 +6,16 @@ import { connect } from "react-redux";
 import { deleteEducation } from "../../actions/profile";
 
 const Education = ({ education, deleteEducation }) => {
+  // Safe check
+  if (!Array.isArray(education) || education.length === 0) {
+    return (
+      <Fragment>
+        <h2 className="my-2">Education Credentials</h2>
+        <p>No education credentials added yet.</p>
+      </Fragment>
+    );
+  }
+
   const educations = education.map((edu) => (
     <tr key={edu._id}>
       <td>{edu.school}</td>
@@ -48,7 +58,6 @@ const Education = ({ education, deleteEducation }) => {
 };
 
 Education.propTypes = {
-  // profile: PropTypes.object.isRequired,
   education: PropTypes.array.isRequired,
   deleteEducation: PropTypes.func.isRequired,
 };

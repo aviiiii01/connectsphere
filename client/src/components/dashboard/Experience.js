@@ -5,9 +5,18 @@ import { connect } from "react-redux";
 import { deleteExperience } from "../../actions/profile";
 
 const Experience = ({ experience, deleteExperience }) => {
+  // Safety check for undefined or empty experience array
+  if (!Array.isArray(experience) || experience.length === 0) {
+    return (
+      <Fragment>
+        <h2 className="my-2">Experience Credentials</h2>
+        <p>No experience credentials added yet.</p>
+      </Fragment>
+    );
+  }
 
   const experiences = experience.map((exp) => (
-     <tr key={exp._id}>
+    <tr key={exp._id}>
       <td>{exp.company}</td>
       <td className="hide-sm">{exp.title}</td>
       <td>
@@ -20,11 +29,13 @@ const Experience = ({ experience, deleteExperience }) => {
       </td>
       <td>
         <button
-          onClick={()=>deleteExperience(exp._id)}
-          className="btn btn-danger">Delete
-       </button>
+          onClick={() => deleteExperience(exp._id)}
+          className="btn btn-danger"
+        >
+          Delete
+        </button>
       </td>
-     </tr>
+    </tr>
   ));
 
   return (
@@ -51,4 +62,3 @@ Experience.propTypes = {
 };
 
 export default connect(null, { deleteExperience })(Experience);
-// export default Experience
